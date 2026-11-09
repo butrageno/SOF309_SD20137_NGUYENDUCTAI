@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PhoneStore - Cửa hàng điện thoại</title>
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div id="logo">PHONE<span>STORE</span></div>
+
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="/products">Sản phẩm</a>
+        <a href="#">Giới thiệu</a>
+        <a href="#">Liên hệ</a>
+      </nav>
+
+      <div id="header-right">
+        <input type="text" placeholder="Tìm điện thoại..." />
+        <a href="#">🛒 Giỏ hàng</a>
+      </div>
+    </header>
+
+    <section id="banner">
+      <div>
+        <h1>ĐIỆN THOẠI CHÍNH HÃNG</h1>
+        <p>Công nghệ mới - Giá tốt mỗi ngày</p>
+        <a href="/products" id="buy-button">MUA NGAY</a>
+      </div>
+    </section>
+
+    <section id="products">
+      <h2>ĐIỆN THOẠI NỔI BẬT</h2>
+      <div id="product-list">
+        <!-- Lặp qua danh sách sản phẩm từ SQL Server -->
+        <div class="product" th:each="p : ${products}">
+          <!-- Hình ảnh -->
+          <img th:src="${p.image}" th:alt="${p.name}" />
+
+          <!-- Tên sản phẩm -->
+          <h3 th:text="${p.name}"></h3>
+
+          <!-- Giá sản phẩm -->
+          <p th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></p>
+
+          <button>Mua ngay</button>
+        </div>
+
+        <!-- Thông báo khi chưa có sản phẩm -->
+        <p th:if="${#lists.isEmpty(products)}">Hiện chưa có sản phẩm nào!</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 PHONESTORE - Cửa hàng điện thoại chính hãng</p>
+    </footer>
+  </body>
+</html>
