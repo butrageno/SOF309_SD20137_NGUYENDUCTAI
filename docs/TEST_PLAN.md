@@ -4,11 +4,12 @@
 
 - **Tên dự án:** PhoneStore - Website bán điện thoại trực tuyến
 - **Sinh viên:** Nguyễn Đức Tài
-- **MSSV:** [Điền MSSV của em]
+- **MSSV:** TS03262
 - **Ngôn ngữ lập trình:** Java 17
 - **Framework:** Spring Boot 3.3.5
 - **Database:** Microsoft SQL Server
 - **Testing Framework:** JUnit 5
+- **Mocking Framework:** Mockito
 - **UI Automation:** Selenium WebDriver 4
 - **Build Tool:** Maven
 - **URL chạy local:** http://localhost:8081
@@ -18,11 +19,11 @@
 ## 1. MỤC TIÊU KIỂM THỬ
 
 - Kiểm thử hoạt động của Backend bằng JUnit 5.
-- Kiểm thử Controller và khả năng xử lý yêu cầu HTTP.
+- Kiểm thử Controller và khả năng xử lý yêu cầu.
+- Kiểm thử chức năng quản lý sản phẩm.
 - Kiểm thử khả năng kết nối giữa Spring Boot và SQL Server.
 - Kiểm thử chức năng truy vấn danh sách sản phẩm từ database.
-- Kiểm thử giao diện tự động bằng Selenium WebDriver 4.
-- Kiểm tra khả năng hiển thị thông tin sản phẩm trên trình duyệt Google Chrome.
+- Kiểm tra khả năng hiển thị thông tin sản phẩm trên website.
 - Chuẩn bị tích hợp kiểm thử tự động với GitHub Actions CI/CD.
 
 ## 2. PHẠM VI KIỂM THỬ
@@ -33,12 +34,12 @@
 - Kiểm thử truy cập trang chủ PhoneStore.
 - Kiểm thử kết nối SQL Server.
 - Kiểm thử truy vấn dữ liệu bảng Products.
-- Kiểm thử hiển thị tên sản phẩm.
-- Kiểm thử hiển thị giá sản phẩm.
-- Kiểm thử hiển thị hình ảnh sản phẩm.
+- Kiểm thử hiển thị danh sách sản phẩm.
+- Kiểm thử hiển thị tên, giá và hình ảnh sản phẩm.
 - Kiểm thử trường hợp database không có sản phẩm.
-- Kiểm thử giao diện bằng Selenium WebDriver.
-- Kiểm thử Backend bằng JUnit 5.
+- Kiểm thử chức năng quản lý sản phẩm: xem, thêm, sửa và xóa.
+- Kiểm thử ProductController bằng JUnit 5 và Mockito.
+- Kiểm thử các trường hợp dữ liệu hợp lệ và không hợp lệ trong phạm vi mã nguồn đã triển khai.
 
 ### 2.2. Out-of-Scope (Ngoài phạm vi kiểm thử)
 
@@ -47,6 +48,7 @@
 - Kiểm thử thanh toán trực tuyến.
 - Kiểm thử ứng dụng trên thiết bị di động.
 - Kiểm thử các chức năng chưa được triển khai.
+- Kiểm thử giao diện tự động bằng Selenium cho đến khi có test chạy thành công.
 
 ## 3. MÔI TRƯỜNG KIỂM THỬ
 
@@ -56,9 +58,10 @@
 | IDE          | Visual Studio Code    |
 | Ngôn ngữ     | Java 17               |
 | Framework    | Spring Boot 3.3.5     |
-| Database     | SQL Server            |
+| Database     | Microsoft SQL Server  |
 | Build Tool   | Maven                 |
 | Unit Testing | JUnit 5               |
+| Mocking      | Mockito               |
 | UI Testing   | Selenium 4            |
 | Trình duyệt  | Google Chrome         |
 | Local URL    | http://localhost:8081 |
@@ -71,11 +74,15 @@ Sử dụng JUnit 5 để kiểm thử các thành phần Backend.
 
 - Kiểm tra phương thức xử lý trong Controller.
 - Kiểm tra kết quả trả về.
+- Kiểm tra dữ liệu được truyền vào Model.
 - Kiểm tra các trường hợp dữ liệu hợp lệ và không hợp lệ.
+- Sử dụng Mockito để giả lập ProductService.
+- Sử dụng ParameterizedTest và CsvSource để kiểm thử nhiều bộ dữ liệu.
+- Sử dụng assertThrows để kiểm tra ngoại lệ.
 
 ### 4.2. UI Automation Testing
 
-Sử dụng Selenium WebDriver 4 để tự động hóa thao tác trên trình duyệt.
+Sử dụng Selenium WebDriver 4 để tự động hóa thao tác trên trình duyệt khi các bài kiểm thử giao diện được triển khai.
 
 - Mở website PhoneStore.
 - Kiểm tra trang chủ.
@@ -92,18 +99,49 @@ Sử dụng SQL Server để kiểm tra:
 
 ## 5. TIÊU CHÍ HOÀN THÀNH
 
-- Tất cả Test Case trong phạm vi kiểm thử đã được thực hiện.
+- Các Test Case trong phạm vi kiểm thử được thực hiện và ghi nhận kết quả.
 - Các Test Case đạt yêu cầu được đánh dấu Pass.
+- Các Test Case chưa thực hiện được đánh dấu Not Run.
 - Các lỗi phát hiện được ghi nhận và xử lý.
 - Các bài kiểm thử JUnit 5 chạy thành công.
-- Các bài kiểm thử Selenium chạy thành công.
+- Các bài kiểm thử Selenium chỉ được đánh dấu hoàn thành khi thực sự chạy thành công.
 - Không còn lỗi nghiêm trọng ảnh hưởng đến chức năng chính.
 - Pipeline GitHub Actions phải chạy thành công sau khi được cấu hình.
 
 ## 6. KẾT QUẢ KIỂM THỬ
 
-Kết quả kiểm thử sẽ được ghi nhận trong file TEST_CASES.md.
+Kết quả Maven Test đã thực hiện:
 
-Các trạng thái bao gồm:
+| Nội dung              |  Kết quả |
+| --------------------- | -------: |
+| ProductControllerTest | 10 tests |
+| SampleControllerTest  |  2 tests |
+| LoginTest             |   1 test |
+| Tổng số test          |       13 |
+| Failures              |        0 |
+| Errors                |        0 |
+| Skipped               |        1 |
+| Build                 |  SUCCESS |
 
-- Pass: Kiểm thử thành công.
+Nhận xét:
+
+- ProductControllerTest chạy thành công 10 test.
+- SampleControllerTest chạy thành công 2 test.
+- LoginTest có 1 test bị bỏ qua (Skipped).
+- Tổng cộng 13 test được ghi nhận, không có Failures và Errors.
+- Các bài kiểm thử giao diện và database cần được thực hiện, ghi nhận riêng nếu chưa có kết quả tự động tương ứng.
+
+## 7. QUY ƯỚC TRẠNG THÁI
+
+- **Pass:** Đã thực hiện kiểm thử và kết quả đúng như mong đợi.
+- **Fail:** Đã thực hiện kiểm thử nhưng kết quả không đúng.
+- **Not Run:** Chưa thực hiện kiểm thử.
+- **Skipped:** Bài kiểm thử bị bỏ qua, không được tính là kiểm thử thành công.
+
+## 8. KẾT LUẬN
+
+Kế hoạch kiểm thử PhoneStore tập trung vào kiểm thử Backend, Controller, chức năng quản lý sản phẩm, kết nối SQL Server và khả năng hiển thị dữ liệu trên website.
+
+JUnit 5 và Mockito được sử dụng để hỗ trợ kiểm thử độc lập các thành phần Backend. Selenium WebDriver được định hướng sử dụng cho kiểm thử giao diện tự động.
+
+Kết quả kiểm thử sẽ tiếp tục được cập nhật trong TEST_CASES.md theo tình trạng thực hiện thực tế.

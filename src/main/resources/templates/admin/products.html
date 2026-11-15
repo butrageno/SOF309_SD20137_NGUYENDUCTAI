@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm - PhoneStore</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background: #f3f6fb;
+        margin: 0;
+        padding: 30px;
+        color: #1e293b;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+      }
+
+      h1 {
+        color: #1769aa;
+      }
+
+      .add-btn {
+        display: inline-block;
+        background: #1769aa;
+        color: white;
+        padding: 11px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 13px;
+        border-bottom: 1px solid #e2e8f0;
+        text-align: left;
+      }
+
+      th {
+        background: #eaf3ff;
+      }
+
+      img {
+        width: 65px;
+        height: 65px;
+        object-fit: contain;
+      }
+
+      .edit {
+        color: #1769aa;
+        text-decoration: none;
+      }
+
+      .delete {
+        background: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      form {
+        display: inline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>QUẢN LÝ SẢN PHẨM</h1>
+      <p>Hệ thống quản lý sản phẩm PhoneStore</p>
+
+      <a th:href="@{/admin/products/add}" class="add-btn"> + Thêm sản phẩm </a>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Hình ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Danh mục</th>
+            <th>Số lượng</th>
+            <th>Thao tác</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="p : ${products}">
+            <td th:text="${p.id}"></td>
+
+            <td>
+              <img th:src="${p.image}" th:alt="${p.name}" />
+            </td>
+
+            <td th:text="${p.name}"></td>
+
+            <td th:text="${#numbers.formatDecimal(p.price, 0, 'COMMA', 0, 'POINT')} + ' đ'"></td>
+
+            <td th:text="${p.category}"></td>
+
+            <td th:text="${p.quantity}"></td>
+
+            <td>
+              <a class="edit" th:href="@{/admin/products/edit/{id}(id=${p.id})}"> Sửa </a>
+
+              <form
+                th:action="@{/admin/products/delete/{id}(id=${p.id})}"
+                method="post"
+                onsubmit="return confirm('Em có chắc muốn xóa sản phẩm này không?');"
+              >
+                <button class="delete" type="submit">Xóa</button>
+              </form>
+            </td>
+          </tr>
+
+          <tr th:if="${#lists.isEmpty(products)}">
+            <td colspan="7">Chưa có sản phẩm nào.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

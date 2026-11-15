@@ -4,13 +4,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * =========================================================================
- * [Y3] FILE TEST MẪU BẰNG JUNIT 5 CHO CONTROLLER
- * Sinh viên tham khảo file này để viết unit test cho các hàm trong Controller/Service
- * dựa theo bộ Test Case đã thiết kế ở Y2 (trong file docs/TEST_CASES.md).
- * =========================================================================
- */
+
+
 public class SampleControllerTest {
 
     @Test

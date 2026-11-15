@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin sản phẩm - PhoneStore</title>
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f1f5fb;
+        padding: 40px;
+      }
+
+      .container {
+        max-width: 650px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+      }
+
+      h2 {
+        color: #1769aa;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 7px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        margin-top: 22px;
+        padding: 12px 20px;
+        background: #1769aa;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      a {
+        margin-left: 12px;
+        color: #1769aa;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2 th:text="${product.id == null ? 'THÊM SẢN PHẨM' : 'CẬP NHẬT SẢN PHẨM'}">
+        Thông tin sản phẩm
+      </h2>
+
+      <form
+        th:object="${product}"
+        th:action="${product.id == null}
+              ? @{/admin/products/add}
+              : @{/admin/products/edit/{id}(id=${product.id})}"
+        method="post"
+      >
+        <label>Tên sản phẩm</label>
+        <input type="text" th:field="*{name}" required />
+
+        <label>Giá sản phẩm</label>
+        <input type="number" th:field="*{price}" min="0" step="0.01" required />
+
+        <label>Đường dẫn hình ảnh</label>
+        <input type="text" th:field="*{image}" />
+
+        <label>Mô tả</label>
+        <textarea th:field="*{description}" rows="4"></textarea>
+
+        <label>Danh mục</label>
+        <input type="text" th:field="*{category}" />
+
+        <label>Số lượng</label>
+        <input type="number" th:field="*{quantity}" min="0" />
+
+        <button type="submit">Lưu sản phẩm</button>
+
+        <a th:href="@{/admin/products}">Quay lại</a>
+      </form>
+    </div>
+  </body>
+</html>
